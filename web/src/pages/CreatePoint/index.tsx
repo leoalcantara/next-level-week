@@ -1,4 +1,4 @@
-import React, { useEffect , useState, ChangeEvent} from 'react';
+import React, { useEffect , useState, ChangeEvent, FormEvent} from 'react';
 import { Link }  from 'react-router-dom';
 import { FiArrowLeft} from 'react-icons/fi';
 import { Map, TileLayer, Marker} from 'react-leaflet';
@@ -114,9 +114,33 @@ const CreatePoint = () => {
 
         } else {
             setSelectedItems([...seletctedItems, id]);
-        }
+        }        
+    };
 
-        
+    async function handleSubmit(event: FormEvent){
+        event.preventDefault();
+
+        const { name, email, whatsapp } = formData;
+        const uf = selectedUF;
+        const city = selectedCity;
+        const [latitude, longitude] = selectedPosition;
+        const items = seletctedItems;
+
+
+        const data = {
+            name,
+            email,
+            whatsapp,
+            uf,
+            city,
+            latitude,
+            longitude,
+            items  
+        };
+
+        await api.post('points',data);
+
+        alert('ponto de coleta criado');
     };
 
 
@@ -131,7 +155,7 @@ const CreatePoint = () => {
                         Voltar para home                   
                 </Link>
             </header>
-            <form action="">
+            <form onSubmit={handleSubmit}>
                 <h1>Cadastro do <br/>ponto de coleta</h1>
 
                 <fieldset>
@@ -219,8 +243,7 @@ const CreatePoint = () => {
                             <li key={item.id} 
                                 onClick= {()=>handleSelectItem(item.id)}
                                 className={seletctedItems.includes(item.id)? 'selected' :  '' }    
-                            >
-                                  
+                            >                             
 
                                 <img src={item.image_url} alt={item.title}/>
                                 <span>{item.title}</span>
