@@ -31,8 +31,15 @@ const CreatePoint = () => {
 
     const [selectedUF, setSelectedUF] = useState('0');
     const [selectedCity, setSelectedCity] = useState('0');
+
     const [initialPosition, setInitialPosition] = useState<[number, number]>([0,0]);
     const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0]);
+    const [seletctedItems, setSelectedItems] = useState<number[]>([]);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        whatsapp:'',
+    }) ;
 
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition(position =>{
@@ -91,6 +98,27 @@ const CreatePoint = () => {
         ])
     };
 
+    function handleInputChange(event: ChangeEvent<HTMLInputElement>){
+        const {name, value} = event.target;
+
+        setFormData({ ...formData, [name]: value })
+    };
+
+    function handleSelectItem(id: number){
+        const alreadySelected = seletctedItems.findIndex(item => item === id);
+
+        if(alreadySelected >= 0){
+            const filtredItems = seletctedItems.filter( item => item !== id);
+
+            setSelectedItems(filtredItems);
+
+        } else {
+            setSelectedItems([...seletctedItems, id]);
+        }
+
+        
+    };
+
 
 
     return (
@@ -117,6 +145,7 @@ const CreatePoint = () => {
                             type="text"
                             name="name"
                             id="name"
+                            onChange={handleInputChange}
                         />
                     </div>
                     <div className="field-group">
@@ -126,6 +155,7 @@ const CreatePoint = () => {
                                 type="text"
                                 name="email"
                                 id="email"
+                                onChange={handleInputChange}
                             />
                         </div>
                         <div className="field">
@@ -134,6 +164,7 @@ const CreatePoint = () => {
                                 type="text"
                                 name="whatsapp"
                                 id="whatsapp"
+                                onChange={handleInputChange}
                             />
                         </div>
 
@@ -185,9 +216,14 @@ const CreatePoint = () => {
                     </legend>
                     <ul className="items-grid">
                         {items.map(item => (
-                            <li key={item.id}>
-                              <img src={item.image_url} alt={item.title}/>
-                        <span>{item.title}</span>
+                            <li key={item.id} 
+                                onClick= {()=>handleSelectItem(item.id)}
+                                className={seletctedItems.includes(item.id)? 'selected' :  '' }    
+                            >
+                                  
+
+                                <img src={item.image_url} alt={item.title}/>
+                                <span>{item.title}</span>
                             </li>  
                         ))}
                                           
