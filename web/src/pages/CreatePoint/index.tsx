@@ -9,7 +9,6 @@ import { LeafletMouseEvent }  from 'leaflet';
 import './style.css';
 import logo from '../../assets/logo.svg';
 
-
 interface Item {
     id: number;
     title: string;
@@ -142,7 +141,8 @@ const CreatePoint = () => {
         };
 
         await api.post('points',data);
-
+        
+       
         alert('ponto de coleta criado');
 
         history.push('/');
