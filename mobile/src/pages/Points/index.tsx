@@ -2,8 +2,8 @@ import React from 'react';
 import Constants  from 'expo-constants';
 import { useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import ViewMap from 'react-native-maps';
 
 
 const Points = () => {
@@ -19,7 +19,15 @@ return (
         <TouchableOpacity onPress={handleNavigateBack}>
             <Icon name="arrow-left" size={20} color="#34cb79"/>
         </TouchableOpacity>
+
+        <Text style={styles.title}>Bem vindo.</Text>
+        <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
+
+        <View style={styles.mapContainer}>
+           <ViewMap style={styles.map}/>
+        </View>
     </View>
+   
     );
 };
 
