@@ -3,7 +3,7 @@ import Constants  from 'expo-constants';
 import { useNavigation } from '@react-navigation/native'
 import { Feather as Icon } from '@expo/vector-icons';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import ViewMap from 'react-native-maps';
+import ViewMap, {Marker} from 'react-native-maps';
 import { SvgUri } from 'react-native-svg';
 
 
@@ -27,7 +27,21 @@ return (
         <Text style={styles.description}>Encontre no mapa um ponto de coleta.</Text>
 
         <View style={styles.mapContainer}>
-           <ViewMap style={styles.map}/>
+           <ViewMap 
+              style={styles.map} 
+              initialRegion={{
+                latitude: -21.2106271,
+                longitude:-41.8898371,
+                latitudeDelta: 0.014,
+                longitudeDelta:0.014,
+              }}
+            >
+             <Marker coordinate={{
+                latitude: -21.2106271,
+                longitude:-41.8898371,
+              }}/> 
+            </ViewMap>
+
         </View>
     </View>
 
