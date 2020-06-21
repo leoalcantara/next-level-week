@@ -16,7 +16,7 @@ interface Item{
 
 const Points = () => {
   const [items, setItems] = useState<Item[]>([]);
-
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const navigation = useNavigation(); 
 
   useEffect(()=>{
@@ -30,8 +30,20 @@ const Points = () => {
         navigation.goBack();
     };
 
-    function handleavigateToDetail(){
+    function handleNavigateToDetail(){
       navigation.navigate('Detail');
+    }
+
+    function handleSelectItem(id: number){
+      const alreadySelected = selectedItems.findIndex(item => item === id);
+
+      if (alreadySelected >= 0){
+        const filteredItems = selectedItems.filter(item => item !== id);
+
+        setSelectedItems(filteredItems);
+      } else {
+        setSelectedItems([ ...selectedItems, id]);
+      }
     }
 
 
@@ -58,7 +70,7 @@ return (
             >
               <Marker 
                 style={styles.mapMarker}
-                onPress={handleavigateToDetail}
+                onPress={handleNavigateToDetail}
                 coordinate={{
                   latitude: -21.2106271,
                   longitude:-41.8898371,
@@ -82,7 +94,14 @@ return (
         contentContainerStyle={{ paddingHorizontal: 20 }}  
       >  
         {items.map(item => (
-          <TouchableOpacity key={String(item.id)} style={styles.item} onPress={()=>{}}>        
+          <TouchableOpacity 
+            key={String(item.id)} 
+            style={[ 
+              styles.item,
+              selectedItems.includes(item.id) ? styles.selectedItem : {}
+            ]} 
+            onPress={()=>handleSelectItem(item.id)}
+          >        
           <SvgUri width={42} height={42} uri={item.image_url} />
           <Text style={styles.itemTitle}>{item.title}</Text>
           </TouchableOpacity>
