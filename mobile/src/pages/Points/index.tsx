@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Constants  from 'expo-constants';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native';
 import { Feather as Icon } from '@expo/vector-icons';
 import { View, ScrollView, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import ViewMap, {Marker} from 'react-native-maps';
