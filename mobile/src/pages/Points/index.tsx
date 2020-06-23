@@ -18,7 +18,7 @@ interface Item{
 interface Point{
   id: number;
   name:string;
-  image: string;
+  image: string;  
   latitude: number;
   longitude: number;
   
